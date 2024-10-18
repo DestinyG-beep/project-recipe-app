@@ -17,6 +17,7 @@ And yes ,the name did come from the movie 👨‍🍳
 ## Features
 
 - **User Login**: you'll see a welcoming alert 👍👍
+- **Nav bar** : pressing any of the elements takes you to the focus location of the element
 - **Recipe Search**: Search for recipes using keywords ( by name) and browse through the results.
 - **Favorites List**: Save your favorite recipes for easy access later.
 - **Submit Your Recipe**: Share your culinary creations by submitting your own recipes.
