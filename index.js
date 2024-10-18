@@ -108,5 +108,15 @@ function saveFavorite(recipe) {
     loadFavorites(); // reload to show the new one
 }
 
+function loadFavorites() {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    favoritesList.innerHTML = ''; // Clear the list
+
+    if (favorites.length === 0) {
+        favoritesList.innerHTML = '<li>No favorites yet.</li>';
+        return;
+    }
+}
+
 
 
