@@ -54,7 +54,7 @@ async function searchRecipes(query) {
     const apiKey = '01d82764e8874af2af81f632504645d3'; 
     const url = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${apiKey}`;
 
-    console.log('Search query:', query); /
+    console.log('Search query:', query); 
     console.log('API URL:', url);
 
     try {
@@ -69,6 +69,15 @@ async function searchRecipes(query) {
         console.error('Error fetching recipes:', error);
         searchResultsDiv.innerHTML = '<p>Error fetching recipes. Please try again.</p>';
     }
+}
+
+function displaySearchResults(recipes) {
+    searchResultsDiv.innerHTML = '';
+
+    if (recipes.length === 0) {
+        searchResultsDiv.innerHTML = '<p>No recipes found.</p>';
+        return; 
     }
 }
+
 
