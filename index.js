@@ -1,4 +1,5 @@
 let searchResultsDiv;
+let favouriteslist; //globally declared hii list
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -6,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const recipeForm = document.getElementById('recipe-form');
     const searchForm = document.getElementById('search-form');
     const toggleDarkModeButton = document.getElementById('toggle-dark-mode');
-    const searchResultsDiv = document.getElementById('search-results');
-    const favoritesList = document.getElementById('favorites-list');
+    searchResultsDiv = document.getElementById('search-results');
+    favoritesList = document.getElementById('favorites-list');
 
     //dark mode
     const currentTheme = localStorage.getItem('theme') || 'light';
@@ -32,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     recipeForm.addEventListener('submit', (event) => {
         event.preventDefault();
         const title = document.getElementById('recipe-title').value;
-        const ingredients = document.getElementById('ingredients').value.split(',').map(ing => ing.trim());
+        const ingredients = document.getElementById('ingredients').value.split(',').map(ing => ing.trim());//youtube😅
         const instructions = document.getElementById('instructions').value;
 
         const recipe = { title, ingredients, instructions };
@@ -90,6 +91,22 @@ function displaySearchResults(recipes) {
         `;
         searchResultsDiv.appendChild(recipeElement); // Add recipe to the results div
     });
+
+    document.querySelectorAll('.favorite-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const title = button.getAttribute('data-title');
+            const image = button.getAttribute('data-image');
+            saveFavorite({ title, image });
+        });
+    }); //event listener button -click
 }
+
+function saveFavorite(recipe) {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    favorites.push(recipe);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    loadFavorites(); // reload to show the new one
+}
+
 
 
