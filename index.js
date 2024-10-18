@@ -56,5 +56,12 @@ async function searchRecipes(query) {
 
     console.log('Search query:', query); /
     console.log('API URL:', url);
+
+    try {
+        const response = await fetch(url); // Fetch data from the API
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`); // Check for errors
+        }
+    }
 }
 
