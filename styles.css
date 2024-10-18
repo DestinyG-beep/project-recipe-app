@@ -96,3 +96,11 @@ button:hover {
     background-color: #f0f0f0;
     mar
 }
+
+body.dark-mode{
+    background-color: black;
+    colour: white;
+}
+main.dark-mode {
+    background-color: #3e3b3b;
+}
