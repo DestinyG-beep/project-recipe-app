@@ -116,7 +116,8 @@ function loadFavorites() {
         favoritesList.innerHTML = '<li>No favorites yet.</li>';
         return;
     }
-
+    
+    //youtube
     favorites.forEach(favorite => {
         const favoriteItem = document.createElement('li');
         favoriteItem.innerHTML = `
