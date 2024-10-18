@@ -50,5 +50,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+async function searchRecipes(query) {
+    const apiKey = '01d82764e8874af2af81f632504645d3'; 
+    const url = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${apiKey}`;
 
+    console.log('Search query:', query); /
+    console.log('API URL:', url);
+}
 
