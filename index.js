@@ -60,8 +60,15 @@ async function searchRecipes(query) {
     try {
         const response = await fetch(url); // Fetch data from the API
         if (!response.ok) {
-            throw new Error(`Error: ${response.status}`); // Check for errors
+            throw new Error(`Error: ${response.status}`); // errors
         }
+
+        const data = await response.json(); 
+        displaySearchResults(data.results);
+    } catch (error) {
+        console.error('Error fetching recipes:', error)
+        searchResultsDiv.innerHTML = '<p>Error fetching recipes. Please try again.</p>';
+    }
     }
 }
 
