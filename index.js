@@ -1,8 +1,7 @@
 let searchResultsDiv;
-let favouriteslist; //globally declared hii list
+let favoritesList; // globally declared favorites list
 
 document.addEventListener('DOMContentLoaded', () => {
-
     const loginForm = document.getElementById('login-form');
     const recipeForm = document.getElementById('recipe-form');
     const searchForm = document.getElementById('search-form');
@@ -10,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     searchResultsDiv = document.getElementById('search-results');
     favoritesList = document.getElementById('favorites-list');
 
-    //dark mode
+    // Dark mode
     const currentTheme = localStorage.getItem('theme') || 'light';
     document.body.classList.toggle('dark-mode', currentTheme === 'dark');
 
@@ -22,31 +21,30 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.toggle('dark-mode', newTheme === 'dark');
     });
 
-    // login
+    // Login
     loginForm.addEventListener('submit', (event) => {
         event.preventDefault(); 
         const username = document.getElementById('username').value;
-        alert(`Hi ${username}, WELCOME TO RATATOUILLE!Be sure not to burn your kitchen 😂👨‍🍳`);
+        alert(`Hi ${username}, WELCOME TO RATATOUILLE! Be sure not to burn your kitchen 😂👨‍🍳`);
         loginForm.reset(); // Reset the form
     });
 
     recipeForm.addEventListener('submit', (event) => {
         event.preventDefault();
         const title = document.getElementById('recipe-title').value;
-        const ingredients = document.getElementById('ingredients').value.split(',').map(ing => ing.trim());//youtube😅
+        const ingredients = document.getElementById('ingredients').value.split(',').map(ing => ing.trim());
         const instructions = document.getElementById('instructions').value;
 
         const recipe = { title, ingredients, instructions };
         saveRecipe(recipe); 
-        saveFavorite({ title, image: '' });
         recipeForm.reset(); 
         loadFavorites(); 
     });
 
-    //search form
+    // Search form
     searchForm.addEventListener('submit', async (event) => {
         event.preventDefault();
-        const query = document.getElementById('recipe-search').value; //  search query
+        const query = document.getElementById('recipe-search').value; // Search query
         await searchRecipes(query); 
         searchForm.reset(); // Reset 
     });
@@ -55,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
 async function searchRecipes(query) {
     const apiKey = '01d82764e8874af2af81f632504645d3'; 
     const url = `https://api.spoonacular.com/recipes/complexSearch?query=${encodeURIComponent(query)}&apiKey=${apiKey}`;
-    
 
     console.log('Search query:', query); 
     console.log('API URL:', url);
@@ -70,7 +67,7 @@ async function searchRecipes(query) {
         const recipeDetailsPromises = data.results.map(recipe => fetchRecipeDetails(recipe.id));
         const recipesWithDetails = await Promise.all(recipeDetailsPromises);
 
-        displaySearchResults(data.results);
+        displaySearchResults(recipesWithDetails); // Use detailed recipes
     } catch (error) {
         console.error('Error fetching recipes:', error);
         searchResultsDiv.innerHTML = '<p>Error fetching recipes. Please try again.</p>';
@@ -96,12 +93,14 @@ async function fetchRecipeDetails(id) {
 function displaySearchResults(recipes) {
     searchResultsDiv.innerHTML = '';
 
-    if (recipes.length === 0) {
+    if (!recipes || recipes.length === 0) {
         searchResultsDiv.innerHTML = '<p>No recipes found.</p>';
         return; 
     }
 
     recipes.forEach(recipe => {
+        if (!recipe) return; // Skip null results
+
         const recipeElement = document.createElement('div');
         recipeElement.className = 'recipe';
         recipeElement.innerHTML = `
@@ -125,7 +124,7 @@ function displaySearchResults(recipes) {
             const image = button.getAttribute('data-image');
             saveFavorite({ title, image });
         });
-    }); //event listener button -click
+    }); // Event listener for button click
 }
 
 function saveRecipe(recipe) {
@@ -138,7 +137,7 @@ function saveFavorite(recipe) {
     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     favorites.push(recipe);
     localStorage.setItem('favorites', JSON.stringify(favorites));
-    loadFavorites(); // reload to show the new one
+    loadFavorites(); // Reload to show the new one
 }
 
 function loadFavorites() {
@@ -150,16 +149,12 @@ function loadFavorites() {
         return;
     }
        
-    //youtube
     favorites.forEach(favorite => {
         const favoriteItem = document.createElement('li');
         favoriteItem.innerHTML = `
             <img src="${favorite.image}" alt="${favorite.title}" />
             <span>${favorite.title}</span>
         `;
-        favoritesList.appendChild(favoriteItem); // add favorites to the list
+        favoritesList.appendChild(favoriteItem); // Add favorites to the list
     });
 }
-
-
-
