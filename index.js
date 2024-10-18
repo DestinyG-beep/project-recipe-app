@@ -1,3 +1,5 @@
+let searchResultsDiv;
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const loginForm = document.getElementById('login-form');
@@ -23,8 +25,21 @@ document.addEventListener('DOMContentLoaded', () => {
     loginForm.addEventListener('submit', (event) => {
         event.preventDefault(); // Prevent page refresh
         const username = document.getElementById('username').value;
-        alert(`Hi ${username}, welcome to ratatouille! Be sure not to burn your kitchen 😂👨‍🍳`);
+        alert(`Hi ${username}, WELCOME TO RATATOUILLE!Be sure not to burn your kitchen 😂👨‍🍳`);
         loginForm.reset(); // Reset the form
     });
+
+    recipeForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const title = document.getElementById('recipe-title').value;
+        const ingredients = document.getElementById('ingredients').value.split(',').map(ing => ing.trim());
+        const instructions = document.getElementById('instructions').value;
+
+        const recipe = { title, ingredients, instructions };
+        saveRecipe(recipe); // Save the recipe to localStorage
+        recipeForm.reset(); // Reset the form
+        loadFavorites(); // Reload favorites to include the new recipe
+    });
+
 
 

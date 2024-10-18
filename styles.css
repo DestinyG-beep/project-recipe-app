@@ -94,7 +94,8 @@ button:hover {
 
 #favorites-list li {
     background-color: #f0f0f0;
-    mar
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 body.dark-mode{
