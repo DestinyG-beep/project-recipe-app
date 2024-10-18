@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchResultsDiv = document.getElementById('search-results');
     const favoritesList = document.getElementById('favorites-list');
 
-    // Set up dark mode
+    //dark mode
     const currentTheme = localStorage.getItem('theme') || 'light';
     document.body.classList.toggle('dark-mode', currentTheme === 'dark');
 
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // login
     loginForm.addEventListener('submit', (event) => {
-        event.preventDefault(); // Prevent page refresh
+        event.preventDefault(); 
         const username = document.getElementById('username').value;
         alert(`Hi ${username}, WELCOME TO RATATOUILLE!Be sure not to burn your kitchen 😂👨‍🍳`);
         loginForm.reset(); // Reset the form
@@ -36,10 +36,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const instructions = document.getElementById('instructions').value;
 
         const recipe = { title, ingredients, instructions };
-        saveRecipe(recipe); // Save the recipe to localStorage
-        recipeForm.reset(); // Reset the form
-        loadFavorites(); // Reload favorites to include the new recipe
+        saveRecipe(recipe); 
+        recipeForm.reset(); 
+        loadFavorites(); 
     });
+
+    //search form
+    searchForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const query = document.getElementById('recipe-search').value; //  search query
+        await searchRecipes(query); 
+        searchForm.reset(); // Reset 
+    });
+});
 
 
 
