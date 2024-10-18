@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const recipe = { title, ingredients, instructions };
         saveRecipe(recipe); 
+        saveFavorite({ title, image: '' });
         recipeForm.reset(); 
         loadFavorites(); 
     });
@@ -148,7 +149,7 @@ function loadFavorites() {
         favoritesList.innerHTML = '<li>No favorites yet.</li>';
         return;
     }
-    
+       
     //youtube
     favorites.forEach(favorite => {
         const favoriteItem = document.createElement('li');
