@@ -66,7 +66,7 @@ async function searchRecipes(query) {
         const data = await response.json(); 
         displaySearchResults(data.results);
     } catch (error) {
-        console.error('Error fetching recipes:', error)
+        console.error('Error fetching recipes:', error);
         searchResultsDiv.innerHTML = '<p>Error fetching recipes. Please try again.</p>';
     }
     }
