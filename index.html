@@ -30,6 +30,34 @@
                     <button type="submit">Login</button>
                 </form>
             </section>
+
+            <form id="search-form">
+                <input type="text" id="recipe-search" placeholder="Search for recipes..." required>
+                <button type="submit">Search</button>
+            </form>
+            <div id="search-results"></div>
+
+            <section id="favorites">
+                <h2>Your Favorites</h2>
+                 <ul id="favorites-list">
+                    <!-- Favorite recipes -->
+                 </ul>
+    
+            </section>
+
+            <section id="submit-recipe">
+                <h2>Submit Your Recipe</h2>
+                <form id="recipe-form">
+                    <label for="recipe-title">Recipe Title:</label>
+                    <input type="text" id="recipe-title" required>
+                    <label for="ingredients">Ingredients :</label>
+                    <textarea id="ingredients" required></textarea>
+                    <label for="instructions">Instructions:</label>
+                    <textarea id="instructions" required></textarea>
+                    <button type="submit">Submit Recipe</button>
+                </form>
+            </section>
+    
         </main>
     </body>
 </html>
