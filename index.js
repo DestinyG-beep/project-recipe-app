@@ -116,6 +116,15 @@ function loadFavorites() {
         favoritesList.innerHTML = '<li>No favorites yet.</li>';
         return;
     }
+
+    favorites.forEach(favorite => {
+        const favoriteItem = document.createElement('li');
+        favoriteItem.innerHTML = `
+            <img src="${favorite.image}" alt="${favorite.title}" />
+            <span>${favorite.title}</span>
+        `;
+        favoritesList.appendChild(favoriteItem); // add favorites to the list
+    });
 }
 
 
