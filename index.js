@@ -127,6 +127,12 @@ function displaySearchResults(recipes) {
     }); //event listener button -click
 }
 
+function saveRecipe(recipe) {
+    const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+    savedRecipes.push(recipe);
+    localStorage.setItem('recipes', JSON.stringify(savedRecipes));
+}
+
 function saveFavorite(recipe) {
     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     favorites.push(recipe);
