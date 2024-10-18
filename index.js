@@ -54,21 +54,41 @@ document.addEventListener('DOMContentLoaded', () => {
 async function searchRecipes(query) {
     const apiKey = '01d82764e8874af2af81f632504645d3'; 
     const url = `https://api.spoonacular.com/recipes/complexSearch?query=${encodeURIComponent(query)}&apiKey=${apiKey}`;
+    
 
     console.log('Search query:', query); 
     console.log('API URL:', url);
 
     try {
-        const response = await fetch(url); // Fetch data from the API
+        const response = await fetch(url); 
         if (!response.ok) {
-            throw new Error(`Error: ${response.status}`); // errors
+            throw new Error(`Error: ${response.status}`); 
         }
 
         const data = await response.json(); 
+        const recipeDetailsPromises = data.results.map(recipe => fetchRecipeDetails(recipe.id));
+        const recipesWithDetails = await Promise.all(recipeDetailsPromises);
+
         displaySearchResults(data.results);
     } catch (error) {
         console.error('Error fetching recipes:', error);
         searchResultsDiv.innerHTML = '<p>Error fetching recipes. Please try again.</p>';
+    }
+}
+
+async function fetchRecipeDetails(id) {
+    const apiKey = '01d82764e8874af2af81f632504645d3';
+    const url = `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching recipe details:', error);
+        return null; 
     }
 }
 
@@ -87,6 +107,12 @@ function displaySearchResults(recipes) {
             <h3>${recipe.title}</h3>
             <img src="${recipe.image}" alt="${recipe.title}" />
             <p>Ready in ${recipe.readyInMinutes} minutes</p>
+            <h4>Ingredients:</h4>
+            <ul>
+                ${recipe.extendedIngredients.map(ing => `<li>${ing.original}</li>`).join('')}
+            </ul>
+            <h4>Instructions:</h4>
+            <p>${recipe.instructions || 'No instructions available.'}</p>
             <button class="favorite-btn" data-title="${recipe.title}" data-image="${recipe.image}">Add to Favorites</button>
         `;
         searchResultsDiv.appendChild(recipeElement); // Add recipe to the results div
