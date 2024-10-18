@@ -78,6 +78,18 @@ function displaySearchResults(recipes) {
         searchResultsDiv.innerHTML = '<p>No recipes found.</p>';
         return; 
     }
+
+    recipes.forEach(recipe => {
+        const recipeElement = document.createElement('div');
+        recipeElement.className = 'recipe';
+        recipeElement.innerHTML = `
+            <h3>${recipe.title}</h3>
+            <img src="${recipe.image}" alt="${recipe.title}" />
+            <p>Ready in ${recipe.readyInMinutes} minutes</p>
+            <button class="favorite-btn" data-title="${recipe.title}" data-image="${recipe.image}">Add to Favorites</button>
+        `;
+        searchResultsDiv.appendChild(recipeElement); // Add recipe to the results div
+    });
 }
 
 
