@@ -1,19 +1,19 @@
 let searchResultsDiv;
 let favoritesList; // globally declared favorites list
 
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.getElementById('login-form');
-    const recipeForm = document.getElementById('recipe-form');
-    const searchForm = document.getElementById('search-form');
-    const toggleDarkModeButton = document.getElementById('toggle-dark-mode');
+document.addEventListener('DOMContentLoaded', () => { //this is the section that is setting up the event listeners when DOM loads.
+    const loginForm = document.getElementById('login-form');//this gets the login form element
+    const recipeForm = document.getElementById('recipe-form');//this gets form  for submitting recipes
+    const searchForm = document.getElementById('search-form'); //this gets the search form for recipes
+    const toggleDarkModeButton = document.getElementById('toggle-dark-mode');//switches b2n light and dark mode
     searchResultsDiv = document.getElementById('search-results');
     favoritesList = document.getElementById('favorites-list');
 
     // Dark mode
-    const currentTheme = localStorage.getItem('theme') || 'light';
+    const currentTheme = localStorage.getItem('theme') || 'light'; //the dark or light mode preference is saved in the local storage
     document.body.classList.toggle('dark-mode', currentTheme === 'dark');
 
-    loadFavorites();
+    loadFavorites(); //this loads the favourites list from local storage
 
     toggleDarkModeButton.addEventListener('click', () => {
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loginForm.reset(); // to reset the form to a blank one
     }); // once you fill the form you will get an alert 'popping up' on your screen
 
-    recipeForm.addEventListener('submit', (event) => {
+    recipeForm.addEventListener('submit', (event) => {// this is the event listener for the recipe submitting for at the end of the page
         event.preventDefault();
         const title = document.getElementById('recipe-title').value;
         const ingredients = document.getElementById('ingredients').value.split(',').map(ing => ing.trim());
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Search form where the user writes the meal or what they are looking for
-    searchForm.addEventListener('submit', async (event) => {
+    searchForm.addEventListener('submit', async (event) => { //this is the event listener for the search form
         event.preventDefault();
         const query = document.getElementById('recipe-search').value; 
         await searchRecipes(query); 
