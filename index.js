@@ -50,31 +50,31 @@ document.addEventListener('DOMContentLoaded', () => { //this is the section that
     });
 });
 
-async function searchRecipes(query) {
+async function searchRecipes(query) {// to get the meal objects / the pics of the recipes . this asyncronous function will only get the image of the recipe serched
     const apiKey = '01d82764e8874af2af81f632504645d3'; 
     const url = `https://api.spoonacular.com/recipes/complexSearch?query=${encodeURIComponent(query)}&apiKey=${apiKey}`;
 
-    console.log('Search query:', query); 
-    console.log('API URL:', url);
+    console.log('Search query:', query); //this will log in the console.
+    console.log('API URL:', url);// this logs in the console to show the url of the api
 
-    try {
-        const response = await fetch(url); 
+    try {// this is the block that will be used to handle errors
+        const response = await fetch(url); // this sends a request to the api using the fetch function
         if (!response.ok) {
             throw new Error(`Error: ${response.status}`); 
         }
 
-        const data = await response.json(); 
-        const recipeDetailsPromises = data.results.map(recipe => fetchRecipeDetails(recipe.id));
+        const data = await response.json(); // this will parse the JSON data returned by the API
+        const recipeDetailsPromises = data.results.map(recipe => fetchRecipeDetails(recipe.id)); //creates an array of promises by mapping over the results
         const recipesWithDetails = await Promise.all(recipeDetailsPromises);
 
         displaySearchResults(recipesWithDetails); // this displays the search results 
-    } catch (error) {
+    } catch (error) { // this block will catch the errors should they occur
         console.error('Error fetching recipes:', error);
         searchResultsDiv.innerHTML = '<p>Error fetching recipes. Please try again.</p>';
     }
-} // to get the meal objects / the pics of the recipes . 
+} 
 
-async function fetchRecipeDetails(id) {
+async function fetchRecipeDetails(id) { // this is the second block that will fetch the detailed info. on the recipes . the items are identical to the one above
     const apiKey = '01d82764e8874af2af81f632504645d3';
     const url = `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`;
 
@@ -90,18 +90,18 @@ async function fetchRecipeDetails(id) {
     }
 }// this part gets the ingredients and the instructions lists from the api .Without it only the images will be visible
 
-function displaySearchResults(recipes) {
-    searchResultsDiv.innerHTML = '';
+function displaySearchResults(recipes) {// fuction will display the search results
+    searchResultsDiv.innerHTML = '';// this will clear any content existing in the div so that the results will not overlap
 
-    if (!recipes || recipes.length === 0) {
+    if (!recipes || recipes.length === 0) {// this will show a message if no recipes were found and ends the function
         searchResultsDiv.innerHTML = '<p>No recipes found.</p>';
         return; 
     }
 
     recipes.forEach(recipe => {
-        if (!recipe) return; // Skip null results
+        if (!recipe) return; // this is a loop to skip null results
 
-        const recipeElement = document.createElement('div');
+        const recipeElement = document.createElement('div');// this block handles the divs created for each recipe so as to seperate them
         recipeElement.className = 'recipe';
         recipeElement.innerHTML = `
             <h3>${recipe.title}</h3>
@@ -118,39 +118,39 @@ function displaySearchResults(recipes) {
         searchResultsDiv.appendChild(recipeElement); // Add recipe to the results div
     });
 
-    document.querySelectorAll('.favorite-btn').forEach(button => {
+    document.querySelectorAll('.favorite-btn').forEach(button => {// this is the event listener for button click below each recipe. You click this for the recipe to be added to the favourites list
         button.addEventListener('click', () => {
             const title = button.getAttribute('data-title');
             const image = button.getAttribute('data-image');
             saveFavorite({ title, image });
         });
-    }); // Event listener for button click below each recipe. You click this for the recipe to be added to the favourites list
+    }); 
 }
 
-function saveRecipe(recipe) {
+function saveRecipe(recipe) {// this saves a recipe to local storage . it adds it to an array of the saved recipes
     const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
     savedRecipes.push(recipe);
     localStorage.setItem('recipes', JSON.stringify(savedRecipes));
-}// this saves a recipe to local storage . it adds it to an array of the saved recipes
+}
 
-function saveFavorite(recipe) {
+function saveFavorite(recipe) {// this block adds aa recipe to the favourites list that is stored in local storage
     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     favorites.push(recipe);
     localStorage.setItem('favorites', JSON.stringify(favorites));
     loadFavorites(); // reloads the favourites list
 }
 
-function loadFavorites() {
+function loadFavorites() {//this is the block that will retrieve the user's fav recipes from local storage
     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     favoritesList.innerHTML = ''; // Clear the list
 
-    if (favorites.length === 0) {
+    if (favorites.length === 0) {// this will showw a message if there is nothing in the favourite
         favoritesList.innerHTML = '<li>No favorites yet.</li>';
         return;
     }
        
-    favorites.forEach(favorite => {
-        const favoriteItem = document.createElement('li');
+    favorites.forEach(favorite => {// this williterate over each item in the favourites array
+        const favoriteItem = document.createElement('li');// this creates a new list item element for each recipe
         favoriteItem.innerHTML = `
             <img src="${favorite.image}" alt="${favorite.title}" />
             <span>${favorite.title}</span>
