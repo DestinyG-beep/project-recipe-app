@@ -1,10 +1,10 @@
-{
+{/* this is for styling all across*/
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
+body {/* this is for the body*/
     font-family: Arial, sans-serif;
     background-color: #b7b3b3;
     color: #333;
@@ -16,7 +16,7 @@ header {
     padding: 15px;
     text-align: center;
 }
-
+/* this is the styling for the nav bar*/
 nav ul {
     list-style-type: none;
 }
@@ -34,7 +34,7 @@ nav a {
 nav a:hover {
     text-decoration: underline;
 }
-
+/* this is what makes items centralised in the page*/
 main {
     max-width: 800px;
     margin: 20px auto;
@@ -48,17 +48,17 @@ section {
     margin-bottom: 20px;
 }
 
-h2 {
+h2 {/*header styling*/
     margin-bottom: 10px;
     color: #4CAF50;
 }
 
-form {
+form {/*form styling*/
     display: flex;
     flex-direction: column;
 }
 
-label {
+label {/* space below each label */
     margin-bottom: 5px;
 }
 
@@ -72,7 +72,7 @@ textarea {
     width: 100%;
 }
 
-button {
+button {/*button styling */
     padding: 10px;
     background-color: #4CAF50;
     color: white;
@@ -83,10 +83,10 @@ button {
     font-size:small;
 }
 
-button:hover {
+button:hover {/* when you hover over the buttons*/
     background-color: #45a049;
 }
-
+/*fav list*/
 #favorites-list {
     list-style-type: none;
     padding: 0;
@@ -97,7 +97,7 @@ button:hover {
     padding: 10px;
     box-sizing: border-box;
 }
-
+/* this is for the dark mode function*/
 body.dark-mode{
     background-color: black;
     colour: white;
